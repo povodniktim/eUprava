@@ -4,8 +4,6 @@
 @inject NavigationManager NavigationManager
 @inject eUpravaContext DbContext
 
-<h3>Welcome, @loggedUser?.Name!</h3>
-
 <!-- Display user information -->
 <div class="form-group">
     <label for="name">Name:</label>
@@ -51,13 +49,16 @@
 @code {
     User? loggedUser;
 
-    protected async override void OnInitialized()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
-
-        if (loggedUser == null)
+        if (firstRender)
         {
-            NavigationManager.NavigateTo("/login");
+            loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
+
+            if (loggedUser == null)
+            {
+                NavigationManager.NavigateTo("/login");
+            }
         }
     }
 }
