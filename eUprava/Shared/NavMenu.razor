@@ -1,4 +1,8 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@using eUprava.Data
+@inject NavigationManager NavigationManager
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">eUprava</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -9,16 +13,28 @@
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-person" aria-hidden="true"></span> Login
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="dashboard">
-                <span class="oi oi-dashboard" aria-hidden="true"></span> Dashboard
-            </NavLink>
-        </div>
+        @if(loggedUser != null)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="dashboard">
+                    <span class="oi oi-dashboard" aria-hidden="true"></span> Dashboard
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" @onclick="ClearSession" Match="NavLinkMatch.All">
+                    <span class="oi oi-person" aria-hidden="true"></span> Logout
+                </NavLink>
+            </div>
+        }
+        else
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+                    <span class="oi oi-person" aria-hidden="true"></span> Login
+                </NavLink>
+            </div>
+        }
+
     </nav>
 </div>
 
@@ -30,5 +46,27 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    public User? loggedUser { get; set; }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
+
+        if (loggedUser == null)
+        {
+            NavigationManager.NavigateTo("/dashboard");
+        }
+
+        StateHasChanged();
+    }
+
+    public void ClearSession()
+    {
+        sessionStorage.ClearAsync();
+        loggedUser = new User();
+        NavigationManager.NavigateTo("/");
     }
 }
