@@ -47,18 +47,18 @@
 
 
 @code {
-    User? loggedUser;
+    public User? loggedUser { get; set; }
+
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
-        {
-            loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
+        loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
 
-            if (loggedUser == null)
-            {
-                NavigationManager.NavigateTo("/login");
-            }
+        if (loggedUser == null)
+        {
+            NavigationManager.NavigateTo("/");
         }
+
+        StateHasChanged();
     }
 }

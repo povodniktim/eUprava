@@ -34,16 +34,19 @@
 }
 
 @code {
-    public User? loggedUser;
+    public User? loggedUser { get; set; }
 
-    protected override async Task OnInitializedAsync()
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
 
         if (loggedUser == null)
         {
-            NavigationManager.NavigateTo("/login");
+            NavigationManager.NavigateTo("/");
         }
+
+        StateHasChanged();
     }
 
 }
