@@ -1,3 +1,4 @@
+using Blazored.SessionStorage;
 using eUprava.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -15,6 +16,7 @@ namespace eUprava
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
             builder.Services.AddSingleton<eUpravaContext>();
+            builder.Services.AddBlazoredSessionStorage();
 
             var app = builder.Build();
 
