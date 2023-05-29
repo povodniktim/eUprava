@@ -6,7 +6,10 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 text-center">
-            <h5>Pozdravljen/a, @loggedUser?.Name @loggedUser?.Surname</h5>
+            @if (loggedUser != null)
+            {
+                <h5>Pozdravljen/a, @loggedUser.Name @loggedUser.Surname</h5>
+            }
         </div>
     </div>
 
@@ -23,16 +26,14 @@
 @code {
     public User? loggedUser;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnInitializedAsync()
     {
-        if (firstRender)
-        {
-            loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
+        loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
 
-            if (loggedUser == null)
-            {
-                NavigationManager.NavigateTo("/login");
-            }
+        if (loggedUser == null)
+        {
+            NavigationManager.NavigateTo("/login");
         }
     }
+
 }
