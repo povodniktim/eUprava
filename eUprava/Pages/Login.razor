@@ -1,5 +1,7 @@
 ﻿@page "/login"
 @using eUprava.Data
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+
 <PageTitle>Login</PageTitle>
 
 <div class="container">
@@ -27,7 +29,7 @@
     [Inject]
     private eUpravaContext DbContext { get; set; }
 
-    private void HandleLogin()
+    private async void HandleLogin()
     {
         var existingUser = DbContext.Users.SingleOrDefault(u => u.Email == user.Email);
 
@@ -36,6 +38,11 @@
             // Successful login
             // You can redirect the user to another page or perform other actions here
             // For demonstration purposes, we'll display a success message
+            await sessionStorage.SetItemAsync("ID", existingUser.Id);
+
+            // Redirect
+
+
         }
         else
         {
