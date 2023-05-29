@@ -38,7 +38,7 @@
             // Successful login
             // You can redirect the user to another page or perform other actions here
             // For demonstration purposes, we'll display a success message
-            await sessionStorage.SetItemAsync("ID", existingUser.Id);
+            await sessionStorage.SetItemAsync("LoggedUser", existingUser);
 
             // Redirect
 
