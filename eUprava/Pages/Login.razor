@@ -27,10 +27,9 @@
     [Inject]
     private eUpravaContext DbContext { get; set; }
 
-    private async Task HandleLogin()
+    private void HandleLogin()
     {
-        var existingUser = await DbContext.Users.FindAsync(user.Username);
-
+        var existingUser = DbContext.Users.SingleOrDefault(u => u.Username == user.Username);
 
         if (existingUser != null && existingUser.Password == user.Password)
         {
@@ -44,6 +43,5 @@
             // You can display an error message or perform other actions here
         }
     }
-
 }
 
