@@ -6,6 +6,8 @@ namespace eUprava.Data
     {
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Vloga> Vloge { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string dbPath = Path.Combine(Directory.GetCurrentDirectory(), "eUprava.db");

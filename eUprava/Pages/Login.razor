@@ -9,7 +9,7 @@
             <form @onsubmit="HandleLogin">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" placeholder="Enter your username" @bind="@user.Username" />
+                    <input type="text" class="form-control" id="username" placeholder="Enter your email" @bind="@user.Email" />
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
@@ -29,7 +29,7 @@
 
     private void HandleLogin()
     {
-        var existingUser = DbContext.Users.SingleOrDefault(u => u.Username == user.Username);
+        var existingUser = DbContext.Users.SingleOrDefault(u => u.Email == user.Email);
 
         if (existingUser != null && existingUser.Password == user.Password)
         {
