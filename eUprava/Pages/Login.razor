@@ -1,6 +1,8 @@
 ﻿@page "/login"
 @using eUprava.Data
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject NavigationManager NavigationManager
+
 
 <PageTitle>Login</PageTitle>
 
@@ -40,8 +42,7 @@
             // For demonstration purposes, we'll display a success message
             await sessionStorage.SetItemAsync("LoggedUser", existingUser);
 
-            // Redirect
-
+            NavigationManager.NavigateTo("/");
 
         }
         else

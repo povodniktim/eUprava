@@ -3,6 +3,23 @@
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 @inject NavigationManager NavigationManager
 
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+            <h5>Pozdravljena/o, @loggedUser?.Name @loggedUser?.Surname</h5>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-4">
+        <div class="col-6 text-center">
+            <a href="/vloga" class="btn btn-primary btn-lg">Oddaj vlogo</a>
+        </div>
+        <div class="col-6 text-center">
+            <a href="/oddane-vloge" class="btn btn-secondary btn-lg">Oddane vloge</a>
+        </div>
+    </div>
+</div>
+
 @code {
     public User? loggedUser;
 
@@ -19,10 +36,3 @@
         }
     }
 }
-
-<h5 style="text-align: center;">Pozdravjlen/a @loggedUser?.Name @loggedUser?.Surname</h5>
-
-<div class="row">
-    <div class="col"><button class="btn btn-primary">Oddaj vlogo</button></div>
-    <div class="col"><button class="btn btn-secondary">Oddane vloge</button></div>
-</div>
