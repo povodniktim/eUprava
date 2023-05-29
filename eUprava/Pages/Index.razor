@@ -1,9 +1,19 @@
 ﻿@page "/"
+@using Data
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject NavigationManager NavigationManager
 
-<PageTitle>Index</PageTitle>
+@code {
 
-<h1>Hello, world!</h1>
+    public User? loggedUser;
 
-Welcome to your new app.
+    protected async override void OnInitialized()
+    {
+        loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+        if(loggedUser == null)
+        {
+            NavigationManager.NavigateTo("/login");
+        }
+    }
+}
