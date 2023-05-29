@@ -2,62 +2,19 @@
 @using Data
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 @inject NavigationManager NavigationManager
-@inject eUpravaContext DbContext
-
-<h3>Welcome, @loggedUser?.Name!</h3>
-
-<!-- Display user information -->
-<div class="form-group">
-    <label for="name">Name:</label>
-    <input id="name" class="form-control" type="text" disabled value="@loggedUser?.Name" />
-
-    <label for="surname">Surname:</label>
-    <input id="surname" class="form-control" type="text" disabled value="@loggedUser?.Surname" />
-
-    <label for="emso">EMSO:</label>
-    <input id="emso" class="form-control" type="text" disabled value="@loggedUser?.EMSO" />
-
-    <label for="city">City:</label>
-    <input id="city" class="form-control" type="text" disabled value="@loggedUser?.City" />
-
-    <label for="address">Address:</label>
-    <input id="address" class="form-control" type="text" disabled value="@loggedUser?.Address" />
-
-    <label for="email">Email:</label>
-    <input id="email" class="form-control" type="text" disabled value="@loggedUser?.Email" />
-</div>
-
-<!-- Other input fields for Vloga -->
-<div class="form-group">
-    <label for="nacinIzvajanja">Nacin Izvajanja:</label>
-    <input id="nacinIzvajanja" class="form-control" type="text" />
-
-    <label for="termin">Termin:</label>
-    <input id="termin" class="form-control" type="datetime-local" />
-
-    <label for="zdravniskoPotrdilo">Zdravnisko Potrdilo:</label>
-    <input id="zdravniskoPotrdilo" class="form-control" type="text" />
-
-    <label for="evidencniKarton">Evidencni Karton:</label>
-    <input id="evidencniKarton" class="form-control" type="text" />
-
-    <label for="karticaPrvePomoci">Kartica Prve Pomoci:</label>
-    <input id="karticaPrvePomoci" class="form-control" type="text" />
-</div>
-
-<button class="btn btn-primary">Submit</button>
-
 
 @code {
-    User? loggedUser;
+
+    public User? loggedUser;
 
     protected async override void OnInitialized()
     {
         loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
 
-        if (loggedUser == null)
+        if(loggedUser == null)
         {
             NavigationManager.NavigateTo("/login");
         }
     }
 }
+
