@@ -26,16 +26,13 @@
 @code {
     public User? loggedUser;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnInitializedAsync()
     {
-        if (firstRender)
-        {
-            loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
+        loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
 
-            if (loggedUser == null)
-            {
-                NavigationManager.NavigateTo("/login");
-            }
+        if (loggedUser == null)
+        {
+            NavigationManager.NavigateTo("/login");
         }
     }
 
