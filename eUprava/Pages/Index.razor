@@ -4,16 +4,18 @@
 @inject NavigationManager NavigationManager
 
 @code {
-
     public User? loggedUser;
 
-    protected async override void OnInitialized()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
-
-        if(loggedUser == null)
+        if (firstRender)
         {
-            NavigationManager.NavigateTo("/login");
+            loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
+
+            if (loggedUser == null)
+            {
+                NavigationManager.NavigateTo("/login");
+            }
         }
     }
 }
