@@ -25,30 +25,30 @@
     <input id="email" class="form-control" type="text" disabled value="@loggedUser?.Email" />
 </div>
 
-<EditForm Model="@Vloga" OnSubmit="HandleSubmit">
+<EditForm Model="@Vloga" OnValidSubmit="HandleSubmit">
     <DataAnnotationsValidator />
-    <ValidationSummary />
     <div class="form-group">
         <label for="nacinIzvajanja">Nacin Izvajanja:</label>
-        <InputText id="nacinIzvajanja" class="form-control" @bind-Value="@Vloga.NacinIzvajanja" />
+        <InputSelect id="nacinIzvajanja" class="form-control" @bind-Value="@Vloga.NacinIzvajanja">
+            <option value="Na daljavo">Na daljavo</option>
+            <option value="V živo">V živo</option>
+        </InputSelect>
         <ValidationMessage For="@(() => Vloga.NacinIzvajanja)" />
 
         <label for="zdravniskoPotrdilo">Zdravnisko Potrdilo:</label>
-        <InputText id="zdravniskoPotrdilo" class="form-control" @bind-Value="@Vloga.ZdravniskoPotrdilo" />
+        <InputFile id="zdravniskoPotrdilo" class="form-control" @bind-Value="@Vloga.ZdravniskoPotrdilo" />
         <ValidationMessage For="@(() => Vloga.ZdravniskoPotrdilo)" />
 
         <label for="evidencniKarton">Evidencni Karton:</label>
-        <InputText id="evidencniKarton" class="form-control" @bind-Value="@Vloga.EvidencniKarton" />
+        <InputFile id="evidencniKarton" class="form-control" @bind-Value="@Vloga.EvidencniKarton" />
         <ValidationMessage For="@(() => Vloga.EvidencniKarton)" />
 
         <label for="karticaPrvePomoci">Kartica Prve Pomoci:</label>
-        <InputText id="karticaPrvePomoci" class="form-control" @bind-Value="@Vloga.KarticaPrvePomoci" />
+        <InputFile id="karticaPrvePomoci" class="form-control" @bind-Value="@Vloga.KarticaPrvePomoci" />
         <ValidationMessage For="@(() => Vloga.KarticaPrvePomoci)" />
     </div>
     <button class="btn btn-primary" type="submit">Submit</button>
 </EditForm>
-
-
 
 @code {
     private User? loggedUser;
