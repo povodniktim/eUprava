@@ -11,12 +11,12 @@ namespace eUprava.Data
     public string EvidencniKarton { get; set; }
     public string KarticaPrvePomoci { get; set; }
     public Status StatusVloge { get; set; }
+  }
 
-    public enum Status
-    {
-      VlogaOddana,
-      VlogaPotrjena,
-      VlogaZavrnjena
-    }
+  public enum Status
+  {
+    Oddana,
+    Potrjena,
+    Zavrnjena
   }
 }

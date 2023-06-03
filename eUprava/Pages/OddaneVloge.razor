@@ -16,14 +16,21 @@
   <tbody>
     @foreach(var vloga in DbContext.Vloge){
       @if(vloga.User == loggedUser){
-            <tr>
-      <th scope="row">@vloga.Id</th>
-      <td>@vloga.NacinIzvajanja</td>
-      <td>@vloga.Termin</td>
-      <td>SPREJETO</td>
+      <tr>
+        <th scope="row">@vloga.Id</th>
+        <td>@vloga.NacinIzvajanja</td>
+        <td>@vloga.Termin</td>
+        <td>
+          @if(vloga.StatusVloge == Data.Status.Oddana){
+            <span class="badge badge-warning">Oddana</span>
+          }else if(vloga.StatusVloge == Data.Status.Potrjena){
+            <span class="badge badge-success">Potrjena</span>
+          }else if(vloga.StatusVloge == Data.Status.Zavrnjena){
+            <span class="badge badge-danger">Zavrnjena</span>
+          }
+        </td>
     </tr>
       }
-
     }
   </tbody>
 </table>
@@ -32,7 +39,6 @@
 
 @code {
     public User? loggedUser { get; set; }
-
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
