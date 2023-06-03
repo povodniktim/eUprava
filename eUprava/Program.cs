@@ -1,4 +1,5 @@
 using Blazored.SessionStorage;
+using CurrieTechnologies.Razor.SweetAlert2;
 using eUprava.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -17,6 +18,9 @@ namespace eUprava
             builder.Services.AddServerSideBlazor();
             builder.Services.AddSingleton<eUpravaContext>();
             builder.Services.AddBlazoredSessionStorage();
+            // SweetAlert2
+            builder.Services.AddSweetAlert2();
+
 
             var app = builder.Build();
 

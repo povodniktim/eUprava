@@ -31,7 +31,7 @@
         <label for="nacinIzvajanja">Nacin Izvajanja:</label>
         <InputSelect id="nacinIzvajanja" class="form-control" @bind-Value="@Vloga.NacinIzvajanja">
             <option value="Na daljavo">Na daljavo</option>
-            <option value="V živo">V živo</option>
+            <option value="Fizično">Fizično</option>
         </InputSelect>
         <ValidationMessage For="@(() => Vloga.NacinIzvajanja)" />
 
@@ -89,6 +89,6 @@
         DbContext.Vloge.Add(Vloga);
         await DbContext.SaveChangesAsync();
 
-        NavigationManager.NavigateTo("/vloge");
+        NavigationManager.NavigateTo("/oddane-vloge");
     }
 }
