@@ -1,0 +1,61 @@
+@page "/oddane-vloge"
+@using eUprava.Data
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject NavigationManager NavigationManager
+@inject eUpravaContext DbContext
+
+
+@if(loggedUser != null){
+  <h1>Oddane vloge</h1>
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nacin</th>
+      <th scope="col">Termin</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach(var vloga in DbContext.Vloge){
+      @if(vloga.User == loggedUser){
+      <tr>
+        <th scope="row">@vloga.Id</th>
+        <td>@vloga.NacinIzvajanja</td>
+        <td>@vloga.Termin</td>
+        <td>
+          @if(vloga.StatusVloge == Data.Status.Oddana){
+            <span class="badge badge-warning"><i class="fa-solid fa-triangle-exclamation"></i></span>
+          }else if(vloga.StatusVloge == Data.Status.Potrjena){
+            <span class="badge badge-success"><i class="fa-solid fa-badge-check"></i></span>
+          }else if(vloga.StatusVloge == Data.Status.Zavrnjena){
+            <span class="badge badge-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+          }
+        </td>
+    </tr>
+      }
+    }
+  </tbody>
+</table>
+}
+
+
+
+@code {
+    public User? loggedUser { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
+
+        if (loggedUser == null)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+
+        StateHasChanged();
+    }
+
+}
+
+

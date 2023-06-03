@@ -3,7 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace eUprava.Data
 {
-  public class Vloga {
+  public class Vloga
+  {
     public int Id { get; set; }
     public User User { get; set; }
 
@@ -16,5 +17,13 @@ namespace eUprava.Data
     public string EvidencniKarton { get; set; }
     [Required]
     public string KarticaPrvePomoci { get; set; }
+    public Status StatusVloge { get; set; }
+  }
+
+  public enum Status
+  {
+    Oddana,
+    Potrjena,
+    Zavrnjena
   }
 }
