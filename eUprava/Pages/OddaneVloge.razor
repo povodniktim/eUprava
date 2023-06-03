@@ -4,7 +4,10 @@
 @inject NavigationManager NavigationManager
 @inject eUpravaContext DbContext
 
-<table class="table table-striped">
+
+@if(loggedUser != null){
+  <h1>Oddane vloge</h1>
+  <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -22,11 +25,11 @@
         <td>@vloga.Termin</td>
         <td>
           @if(vloga.StatusVloge == Data.Status.Oddana){
-            <span class="badge badge-warning">Oddana</span>
+            <span class="badge badge-warning"><i class="fa-solid fa-triangle-exclamation"></i></span>
           }else if(vloga.StatusVloge == Data.Status.Potrjena){
-            <span class="badge badge-success">Potrjena</span>
+            <span class="badge badge-success"><i class="fa-solid fa-badge-check"></i></span>
           }else if(vloga.StatusVloge == Data.Status.Zavrnjena){
-            <span class="badge badge-danger">Zavrnjena</span>
+            <span class="badge badge-danger"><i class="fa-solid fa-circle-xmark"></i></span>
           }
         </td>
     </tr>
@@ -34,6 +37,7 @@
     }
   </tbody>
 </table>
+}
 
 
 
