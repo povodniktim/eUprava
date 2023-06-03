@@ -1,7 +1,8 @@
 
 namespace eUprava.Data
 {
-  public class Vloga {
+  public class Vloga
+  {
     public int Id { get; set; }
     public User User { get; set; }
     public string NacinIzvajanja { get; set; }
@@ -9,5 +10,13 @@ namespace eUprava.Data
     public string ZdravniskoPotrdilo { get; set; }
     public string EvidencniKarton { get; set; }
     public string KarticaPrvePomoci { get; set; }
+    public Status StatusVloge { get; set; }
+
+    public enum Status
+    {
+      VlogaOddana,
+      VlogaPotrjena,
+      VlogaZavrnjena
+    }
   }
 }
