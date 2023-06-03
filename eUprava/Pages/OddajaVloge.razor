@@ -1,0 +1,83 @@
+﻿@page "/oddaja-vloge"
+@using eUprava.Data
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject NavigationManager NavigationManager
+@inject eUpravaContext DbContext
+
+<!-- Auto filled inputs-->
+<div class="form-group">
+    <label for="name">Name:</label>
+    <input id="name" class="form-control" type="text" disabled value="@loggedUser?.Name" />
+
+    <label for="surname">Surname:</label>
+    <input id="surname" class="form-control" type="text" disabled value="@loggedUser?.Surname" />
+
+    <label for="emso">EMSO:</label>
+    <input id="emso" class="form-control" type="text" disabled value="@loggedUser?.EMSO" />
+
+    <label for="city">City:</label>
+    <input id="city" class="form-control" type="text" disabled value="@loggedUser?.City" />
+
+    <label for="address">Address:</label>
+    <input id="address" class="form-control" type="text" disabled value="@loggedUser?.Address" />
+
+    <label for="email">Email:</label>
+    <input id="email" class="form-control" type="text" disabled value="@loggedUser?.Email" />
+</div>
+
+<EditForm Model="@Vloga" OnSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="nacinIzvajanja">Nacin Izvajanja:</label>
+        <InputText id="nacinIzvajanja" class="form-control" @bind-Value="@Vloga.NacinIzvajanja" />
+        <ValidationMessage For="@(() => Vloga.NacinIzvajanja)" />
+
+        <label for="zdravniskoPotrdilo">Zdravnisko Potrdilo:</label>
+        <InputText id="zdravniskoPotrdilo" class="form-control" @bind-Value="@Vloga.ZdravniskoPotrdilo" />
+        <ValidationMessage For="@(() => Vloga.ZdravniskoPotrdilo)" />
+
+        <label for="evidencniKarton">Evidencni Karton:</label>
+        <InputText id="evidencniKarton" class="form-control" @bind-Value="@Vloga.EvidencniKarton" />
+        <ValidationMessage For="@(() => Vloga.EvidencniKarton)" />
+
+        <label for="karticaPrvePomoci">Kartica Prve Pomoci:</label>
+        <InputText id="karticaPrvePomoci" class="form-control" @bind-Value="@Vloga.KarticaPrvePomoci" />
+        <ValidationMessage For="@(() => Vloga.KarticaPrvePomoci)" />
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</EditForm>
+
+
+
+@code {
+    private User? loggedUser;
+    Vloga Vloga = new Vloga();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
+
+        if (loggedUser == null)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            // Find the user in the database to ensure a fresh instance
+            loggedUser = await DbContext.Users.FindAsync(loggedUser.Id);
+        }
+
+        StateHasChanged();
+    }
+
+    private async Task HandleSubmit()
+    {
+        Vloga.User = loggedUser;
+
+        DbContext.Vloge.Add(Vloga);
+        await DbContext.SaveChangesAsync();
+
+        NavigationManager.NavigateTo("/vloge");
+    }
+}
