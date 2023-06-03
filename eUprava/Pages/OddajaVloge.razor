@@ -54,18 +54,6 @@
     private User? loggedUser;
     Vloga Vloga = new Vloga();
 
-    private async Task HandleFileSelection(InputFileChangeEventArgs e, string propertyName)
-    {
-        var file = e.File;
-        if (file != null)
-        {
-            // var filePath = full path of the file
-            
-            // Update the corresponding property with the file path
-            typeof(Vloga).GetProperty(propertyName)?.SetValue(Vloga, file.Name);
-        }
-    }
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
@@ -83,7 +71,16 @@
         StateHasChanged();
     }
 
-
+    private async Task HandleFileSelection(InputFileChangeEventArgs e, string propertyName)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            var roothpath = Path.Combine(Directory.GetCurrentDirectory(), file.Name);
+            // Save the file name (including extension) to the corresponding property
+            typeof(Vloga).GetProperty(propertyName)?.SetValue(Vloga, roothpath);
+        }
+    }
 
     private async Task HandleSubmit()
     {

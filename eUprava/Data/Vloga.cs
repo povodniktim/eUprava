@@ -9,7 +9,7 @@ namespace eUprava.Data
     public User User { get; set; }
 
     [Required(ErrorMessage = "Prosim izberite Naèin Izvajanja.")]
-    public string NacinIzvajanja { get; set; }
+    public string NacinIzvajanja { get; set; } = "Fizièno";
 
     [Required(ErrorMessage = "Prosim naložite Zdravniško Potrdilo.")]
     public string ZdravniskoPotrdilo { get; set; }
