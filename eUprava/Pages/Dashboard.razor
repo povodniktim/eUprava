@@ -17,18 +17,18 @@
             @if (!loggedUser.isAdmin)
             {
                 <div class="col-6 text-center">
-                    <a href="/oddaja-vloge" class="btn btn-primary btn-lg">Oddaj vlogo</a>
+                    <a href="/oddaja-vloge" class="btn btn-primary btn-lg"><i class="fa-solid fa-file-contract"></i> Oddaj vlogo</a>
                 </div>
                 @if(DbContext.Vloge.Any(x => x.User == loggedUser)){
                 <div class="col-6 text-center">
-                    <a href="/oddane-vloge" class="btn btn-secondary btn-lg">Oddane vloge</a>
+                    <a href="/oddane-vloge" class="btn btn-secondary btn-lg"><i class="fa-solid fa-table-list"></i> Oddane vloge</a>
                 </div>
                 }
             }
             else
             {
                 <div class="col-6 text-center">
-                    <a href="/pregled" class="btn btn-secondary btn-lg">Pregled vlog</a>
+                    <a href="/pregled" class="btn btn-secondary btn-lg"><i class="fa-solid fa-table-list"></i> Pregled vlog</a>
                 </div>
             }
         </div>
