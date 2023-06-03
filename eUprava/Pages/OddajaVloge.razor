@@ -36,15 +36,15 @@
         <ValidationMessage For="@(() => Vloga.NacinIzvajanja)" />
 
         <label for="zdravniskoPotrdilo">Zdravnisko Potrdilo:</label>
-        <InputFile id="zdravniskoPotrdilo" class="form-control" @bind-Value="@Vloga.ZdravniskoPotrdilo" />
+        <InputFile id="zdravniskoPotrdilo" class="form-control" OnChange="e => HandleFileSelection(e, nameof(Vloga.ZdravniskoPotrdilo))" />
         <ValidationMessage For="@(() => Vloga.ZdravniskoPotrdilo)" />
 
         <label for="evidencniKarton">Evidencni Karton:</label>
-        <InputFile id="evidencniKarton" class="form-control" @bind-Value="@Vloga.EvidencniKarton" />
+        <InputFile id="evidencniKarton" class="form-control" OnChange="e => HandleFileSelection(e, nameof(Vloga.EvidencniKarton))" />
         <ValidationMessage For="@(() => Vloga.EvidencniKarton)" />
 
         <label for="karticaPrvePomoci">Kartica Prve Pomoci:</label>
-        <InputFile id="karticaPrvePomoci" class="form-control" @bind-Value="@Vloga.KarticaPrvePomoci" />
+        <InputFile id="karticaPrvePomoci" class="form-control" OnChange="e => HandleFileSelection(e, nameof(Vloga.KarticaPrvePomoci))" />
         <ValidationMessage For="@(() => Vloga.KarticaPrvePomoci)" />
     </div>
     <button class="btn btn-primary" type="submit">Submit</button>
@@ -53,6 +53,18 @@
 @code {
     private User? loggedUser;
     Vloga Vloga = new Vloga();
+
+    private async Task HandleFileSelection(InputFileChangeEventArgs e, string propertyName)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            // var filePath = full path of the file
+            
+            // Update the corresponding property with the file path
+            typeof(Vloga).GetProperty(propertyName)?.SetValue(Vloga, file.Name);
+        }
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -70,6 +82,8 @@
 
         StateHasChanged();
     }
+
+
 
     private async Task HandleSubmit()
     {
