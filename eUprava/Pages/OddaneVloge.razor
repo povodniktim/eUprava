@@ -6,51 +6,39 @@
 @inject eUpravaContext DbContext
 @inject SweetAlertService Swal
 
-@if (loggedUser != null)
-{
-    <h1>Oddane vloge</h1>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">NaËin</th>
-                <th scope="col">Termin</th>
-                <th scope="col">Status</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var vloga in DbContext.Vloge)
-            {
-                @if (vloga.User.Id == loggedUser.Id)
-                {
-                    <tr>
-                        <th scope="row">@vloga.Id</th>
-                        <td>@vloga.NacinIzvajanja</td>
-                        <td>@vloga.Termin</td>
-                        <td>
-                            @if (vloga.StatusVloge == Data.Status.Oddana)
-                            {
-                                <i class="fa-solid fa-triangle-exclamation text-warning"></i>
-                            }
-                            else if (vloga.StatusVloge == Data.Status.Potrjena)
-                            {
-                                <i class="fa-solid fa-badge-check text-success"></i>
-                            }
-                            else if (vloga.StatusVloge == Data.Status.Zavrnjena)
-                            {
-                                <i class="fa-solid fa-circle-xmark text-danger"></i>
-                            }
-                        </td>
-                        <td>
-                            <button class="btn btn-primary" @onclick="() => EditVloga(vloga.Id)">Edit</button>
-                            <button class="btn btn-danger" @onclick="() => DeleteVloga(vloga.Id)">Delete</button>
-                        </td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
+
+@if(loggedUser != null){
+  <h1>Oddane vloge</h1>
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Naƒçin</th>
+      <th scope="col">Termin</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach(var vloga in DbContext.Vloge){
+      @if(vloga.User.Id == loggedUser.Id){
+      <tr>
+        <th scope="row">@vloga.Id</th>
+        <td>@vloga.NacinIzvajanja</td>
+        <td>@vloga.Termin</td>
+        <td>
+          @if(vloga.StatusVloge == Data.Status.Oddana){
+            <i class="fa-solid fa-triangle-exclamation text-warning">&nbsp;Oddana</i>
+          }else if(vloga.StatusVloge == Data.Status.Potrjena){
+            <i class="fa-solid fa-badge-check text-success">&nbsp;Potrjena</i>
+          }else if(vloga.StatusVloge == Data.Status.Zavrnjena){
+            <i class="fa-solid fa-circle-xmark text-danger">&nbsp;Zavrjnjena</i>
+          }
+        </td>
+    </tr>
+      }
+    }
+  </tbody>
+</table>
 }
 
 @code {
@@ -83,12 +71,12 @@
             var result = await Swal.FireAsync(new SweetAlertOptions
                 {
                     Title = "Izbris Vloge",
-                    Text = "Ali ste prepriËani da ûelite izbrisati to vlogo?",
+                    Text = "Ali ste prepriƒçani da ≈æelite izbrisati to vlogo?",
                     Icon = SweetAlertIcon.Warning,
                     ShowCancelButton = true,
-                    ConfirmButtonText = "Izbriöi",
+                    ConfirmButtonText = "Izbri≈°i",
                     ConfirmButtonColor = "#dc3545",
-                    CancelButtonText = "PrekliËi",
+                    CancelButtonText = "Prekliƒçi",
                     ReverseButtons = true
                 });
 
