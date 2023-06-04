@@ -4,116 +4,116 @@
 @inject NavigationManager NavigationManager
 @inject eUpravaContext DbContext
 
-@if(loggedUser != null){
-<!-- Auto filled inputs-->
-<div class="form-group">
-    <label for="name">Ime:</label>
-    <input id="name" class="form-control" type="text" disabled value="@loggedUser?.Name" />
-
-    <label for="surname">Priimek:</label>
-    <input id="surname" class="form-control" type="text" disabled value="@loggedUser?.Surname" />
-
-    <label for="emso">EMŠO:</label>
-    <input id="emso" class="form-control" type="text" disabled value="@loggedUser?.EMSO" />
-
-    <label for="city">Mesto:</label>
-    <input id="city" class="form-control" type="text" disabled value="@loggedUser?.City" />
-
-    <label for="address">Naslov:</label>
-    <input id="address" class="form-control" type="text" disabled value="@loggedUser?.Address" />
-
-    <label for="email">Email:</label>
-    <input id="email" class="form-control" type="text" disabled value="@loggedUser?.Email" />
-</div>
-
-@if(loggedUser.isAdmin == false){
-<EditForm Model="@Vloga" OnValidSubmit="HandleSubmit">
-    <DataAnnotationsValidator />
-    <div class="form-group">
-        <label for="nacinIzvajanja">Nacin Izvajanja:</label>
-        <InputSelect id="nacinIzvajanja" class="form-control" @bind-Value="@Vloga.NacinIzvajanja">
-            <option value="Na daljavo">Na daljavo</option>
-            <option value="Fizično">Fizično</option>
-        </InputSelect>
-        <ValidationMessage For="@(() => Vloga.NacinIzvajanja)" />
-
-        <label for="zdravniskoPotrdilo">Zdravniško Potrdilo:</label>
-        @if (!string.IsNullOrEmpty(Vloga.ZdravniskoPotrdilo))
-        {
-            <p>Current File: <a href="@Vloga.ZdravniskoPotrdilo" target="_blank">@GetFileNameFromPath(Vloga.ZdravniskoPotrdilo)</a></p>
-        }
-        <InputFile id="zdravniskoPotrdilo" class="form-control" OnChange="e => HandleFileSelection(e, nameof(Vloga.ZdravniskoPotrdilo))" />
-        <ValidationMessage For="@(() => Vloga.ZdravniskoPotrdilo)" />
-
-        <label for="evidencniKarton">Evidenčni Karton:</label>
-        @if (!string.IsNullOrEmpty(Vloga.EvidencniKarton))
-        {
-            <p>Current File: <a href="@Vloga.EvidencniKarton" target="_blank">@GetFileNameFromPath(Vloga.EvidencniKarton)</a></p>
-        }
-        <InputFile id="evidencniKarton" class="form-control" OnChange="e => HandleFileSelection(e, nameof(Vloga.EvidencniKarton))" />
-        <ValidationMessage For="@(() => Vloga.EvidencniKarton)" />
-
-        <label for="karticaPrvePomoci">Kartica Prve Pomoči:</label>
-        @if (!string.IsNullOrEmpty(Vloga.KarticaPrvePomoci))
-        {
-            <p>Current File: <a href="@Vloga.KarticaPrvePomoci" target="_blank">@GetFileNameFromPath(Vloga.KarticaPrvePomoci)</a></p>
-        }
-        <InputFile id="karticaPrvePomoci" class="form-control" OnChange="e => HandleFileSelection(e, nameof(Vloga.KarticaPrvePomoci))" />
-        <ValidationMessage For="@(() => Vloga.KarticaPrvePomoci)" />
-
-    </div>
-    <button class="btn btn-primary" type="submit">Submit</button>
-</EditForm>
-}else
+@if(loggedUser != null)
 {
-    <EditForm Model="@Vloga" OnValidSubmit="HandleSubmit">
-    <DataAnnotationsValidator />
+    <!-- Auto filled inputs-->
     <div class="form-group">
-        <label for="nacinIzvajanja">Nacin Izvajanja:</label>
-        <InputSelect id="nacinIzvajanja" class="form-control" @bind-Value="@Vloga.NacinIzvajanja">
-            <option value="Na daljavo">Na daljavo</option>
-            <option value="Fizično">Fizično</option>
-        </InputSelect>
+        <label for="name">Ime:</label>
+        <input id="name" class="form-control" type="text" disabled value="@loggedUser?.Name" />
 
-        <label for="status">Status:</label>
-        <InputSelect id="status" class="form-control" @bind-Value="@Vloga.StatusVloge">
-            <option value="0">Oddana</option>
-            <option value="1">Potrjena</option>
-            <option value="2">Zavrnjena</option>
-        </InputSelect>
-    
+        <label for="surname">Priimek:</label>
+        <input id="surname" class="form-control" type="text" disabled value="@loggedUser?.Surname" />
 
-        <ValidationMessage For="@(() => Vloga.NacinIzvajanja)" />
+        <label for="emso">EMŠO:</label>
+        <input id="emso" class="form-control" type="text" disabled value="@loggedUser?.EMSO" />
 
-        <label for="zdravniskoPotrdilo">Zdravniško Potrdilo:</label>
-        @if (!string.IsNullOrEmpty(Vloga.ZdravniskoPotrdilo))
-        {
-            <p>Current File: <a href="@Vloga.ZdravniskoPotrdilo" target="_blank">@GetFileNameFromPath(Vloga.ZdravniskoPotrdilo)</a></p>
-        }
+        <label for="city">Mesto:</label>
+        <input id="city" class="form-control" type="text" disabled value="@loggedUser?.City" />
 
-        <label for="evidencniKarton">Evidenčni Karton:</label>
-        @if (!string.IsNullOrEmpty(Vloga.EvidencniKarton))
-        {
-            <p>Current File: <a href="@Vloga.EvidencniKarton" target="_blank">@GetFileNameFromPath(Vloga.EvidencniKarton)</a></p>
-        }
+        <label for="address">Naslov:</label>
+        <input id="address" class="form-control" type="text" disabled value="@loggedUser?.Address" />
 
-        <label for="karticaPrvePomoci">Kartica Prve Pomoči:</label>
-        @if (!string.IsNullOrEmpty(Vloga.KarticaPrvePomoci))
-        {
-            <p>Current File: <a href="@Vloga.KarticaPrvePomoci" target="_blank">@GetFileNameFromPath(Vloga.KarticaPrvePomoci)</a></p>
-        }
+        <label for="email">Email:</label>
+        <input id="email" class="form-control" type="text" disabled value="@loggedUser?.Email" />
+    </div>
+
+    @if(loggedUser.isAdmin == false){
+    <EditForm Model="@Vloga" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label for="nacinIzvajanja">Nacin Izvajanja:</label>
+            <InputSelect id="nacinIzvajanja" class="form-control" @bind-Value="@Vloga.NacinIzvajanja">
+                <option value="Na daljavo">Na daljavo</option>
+                <option value="Fizično">Fizično</option>
+            </InputSelect>
+            <ValidationMessage For="@(() => Vloga.NacinIzvajanja)" />
+
+            <label for="zdravniskoPotrdilo">Zdravniško Potrdilo:</label>
+            @if (!string.IsNullOrEmpty(Vloga.ZdravniskoPotrdilo))
+            {
+                <p>Current File: <a href="@Vloga.ZdravniskoPotrdilo" target="_blank">@GetFileNameFromPath(Vloga.ZdravniskoPotrdilo)</a></p>
+            }
+            <InputFile id="zdravniskoPotrdilo" class="form-control" OnChange="e => HandleFileSelection(e, nameof(Vloga.ZdravniskoPotrdilo))" />
+            <ValidationMessage For="@(() => Vloga.ZdravniskoPotrdilo)" />
+
+            <label for="evidencniKarton">Evidenčni Karton:</label>
+            @if (!string.IsNullOrEmpty(Vloga.EvidencniKarton))
+            {
+                <p>Current File: <a href="@Vloga.EvidencniKarton" target="_blank">@GetFileNameFromPath(Vloga.EvidencniKarton)</a></p>
+            }
+            <InputFile id="evidencniKarton" class="form-control" OnChange="e => HandleFileSelection(e, nameof(Vloga.EvidencniKarton))" />
+            <ValidationMessage For="@(() => Vloga.EvidencniKarton)" />
+
+            <label for="karticaPrvePomoci">Kartica Prve Pomoči:</label>
+            @if (!string.IsNullOrEmpty(Vloga.KarticaPrvePomoci))
+            {
+                <p>Current File: <a href="@Vloga.KarticaPrvePomoci" target="_blank">@GetFileNameFromPath(Vloga.KarticaPrvePomoci)</a></p>
+            }
+            <InputFile id="karticaPrvePomoci" class="form-control" OnChange="e => HandleFileSelection(e, nameof(Vloga.KarticaPrvePomoci))" />
+            <ValidationMessage For="@(() => Vloga.KarticaPrvePomoci)" />
+
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </EditForm>
+    }
+    else
+    {
+        <EditForm Model="@Vloga" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label for="nacinIzvajanja">Nacin Izvajanja:</label>
+            <InputSelect id="nacinIzvajanja" class="form-control" @bind-Value="@Vloga.NacinIzvajanja">
+                <option value="Na daljavo">Na daljavo</option>
+                <option value="Fizično">Fizično</option>
+            </InputSelect>
+
+            <label for="status">Status:</label>
+            <InputSelect id="status" class="form-control" @bind-Value="@Vloga.StatusVloge">
+                @foreach (Status status in Enum.GetValues(typeof(Status)))
+                {
+                    <option value="@status">@status.ToString()</option>
+                }
+            </InputSelect>
+
+            <ValidationMessage For="@(() => Vloga.NacinIzvajanja)" />
+
+            <label for="zdravniskoPotrdilo">Zdravniško Potrdilo:</label>
+            @if (!string.IsNullOrEmpty(Vloga.ZdravniskoPotrdilo))
+            {
+                <p>Current File: <a href="@Vloga.ZdravniskoPotrdilo" target="_blank">@GetFileNameFromPath(Vloga.ZdravniskoPotrdilo)</a></p>
+            }
+
+            <label for="evidencniKarton">Evidenčni Karton:</label>
+            @if (!string.IsNullOrEmpty(Vloga.EvidencniKarton))
+            {
+                <p>Current File: <a href="@Vloga.EvidencniKarton" target="_blank">@GetFileNameFromPath(Vloga.EvidencniKarton)</a></p>
+            }
+
+            <label for="karticaPrvePomoci">Kartica Prve Pomoči:</label>
+            @if (!string.IsNullOrEmpty(Vloga.KarticaPrvePomoci))
+            {
+                <p>Current File: <a href="@Vloga.KarticaPrvePomoci" target="_blank">@GetFileNameFromPath(Vloga.KarticaPrvePomoci)</a></p>
+            }
 
         
-    <label for="komentar">Komentar:</label>
-    <input id="komentar" class="form-control" type="text" value="tu mora bit bind al neki" />
+        <label for="komentar">Komentar:</label>
+        <input id="komentar" class="form-control" type="text" @bind-value="@Vloga.Komentar" />
 
-    </div>
-    <button class="btn btn-primary" type="submit">Submit</button>
-</EditForm>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </EditForm>
+    }
 }
-}
-
-
 
 @code {
     private User? loggedUser { get; set; }
@@ -170,6 +170,13 @@
         DbContext.Vloge.Update(Vloga);
         await DbContext.SaveChangesAsync();
 
-        NavigationManager.NavigateTo("/oddane-vloge");
+        if (loggedUser.isAdmin)
+        {
+            NavigationManager.NavigateTo("/pregled-vlog");
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/oddane-vloge");
+        }
     }
 }
