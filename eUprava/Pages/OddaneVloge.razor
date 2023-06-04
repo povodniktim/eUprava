@@ -16,6 +16,7 @@
       <th scope="col">Način</th>
       <th scope="col">Termin</th>
       <th scope="col">Status</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -33,6 +34,10 @@
           }else if(vloga.StatusVloge == Data.Status.Zavrnjena){
             <i class="fa-solid fa-circle-xmark text-danger">&nbsp;Zavrjnjena</i>
           }
+        </td>
+        <td>
+            <button class="btn btn-primary" @onclick="() => EditVloga(vloga.Id)">Edit</button>
+            <button class="btn btn-danger" @onclick="() => DeleteVloga(vloga.Id)">Delete</button>
         </td>
     </tr>
       }
