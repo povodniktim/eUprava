@@ -9,22 +9,22 @@
     <!-- Auto filled inputs-->
     <div class="form-group">
         <label for="name">Ime:</label>
-        <input id="name" class="form-control" type="text" disabled value="@loggedUser?.Name" />
+        <input id="name" class="form-control" type="text" disabled value="@Vloga.User?.Name" />
 
         <label for="surname">Priimek:</label>
-        <input id="surname" class="form-control" type="text" disabled value="@loggedUser?.Surname" />
+        <input id="surname" class="form-control" type="text" disabled value="@Vloga.User?.Surname" />
 
         <label for="emso">EMŠO:</label>
-        <input id="emso" class="form-control" type="text" disabled value="@loggedUser?.EMSO" />
+        <input id="emso" class="form-control" type="text" disabled value="@Vloga.User?.EMSO" />
 
         <label for="city">Mesto:</label>
-        <input id="city" class="form-control" type="text" disabled value="@loggedUser?.City" />
+        <input id="city" class="form-control" type="text" disabled value="@Vloga.User?.City" />
 
         <label for="address">Naslov:</label>
-        <input id="address" class="form-control" type="text" disabled value="@loggedUser?.Address" />
+        <input id="address" class="form-control" type="text" disabled value="@Vloga.User?.Address" />
 
         <label for="email">Email:</label>
-        <input id="email" class="form-control" type="text" disabled value="@loggedUser?.Email" />
+        <input id="email" class="form-control" type="text" disabled value="@Vloga.User?.Email" />
     </div>
 
     @if(loggedUser.isAdmin == false){
