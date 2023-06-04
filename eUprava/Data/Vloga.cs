@@ -23,6 +23,8 @@ namespace eUprava.Data
     public DateTime Termin { get; set; }
 
     public Status StatusVloge { get; set; }
+
+    public string Komentar { get; set; }
   }
 
   public enum Status
