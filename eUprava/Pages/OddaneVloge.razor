@@ -11,7 +11,7 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Naèin</th>
+      <th scope="col">NaÄin</th>
       <th scope="col">Termin</th>
       <th scope="col">Status</th>
     </tr>
@@ -25,11 +25,11 @@
         <td>@vloga.Termin</td>
         <td>
           @if(vloga.StatusVloge == Data.Status.Oddana){
-            <i class="fa-solid fa-triangle-exclamation text-warning"></i>
+            <i class="fa-solid fa-triangle-exclamation text-warning">&nbsp;Oddana</i>
           }else if(vloga.StatusVloge == Data.Status.Potrjena){
-            <i class="fa-solid fa-badge-check text-success"></i>
+            <i class="fa-solid fa-badge-check text-success">&nbsp;Potrjena</i>
           }else if(vloga.StatusVloge == Data.Status.Zavrnjena){
-            <i class="fa-solid fa-circle-xmark text-danger"></i>
+            <i class="fa-solid fa-circle-xmark text-danger">&nbsp;Zavrnjena</i>
           }
         </td>
     </tr>

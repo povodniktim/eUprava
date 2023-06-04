@@ -1,0 +1,90 @@
+@page "/pregled-vlog"
+@using eUprava.Data
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject NavigationManager NavigationManager
+@inject eUpravaContext DbContext
+
+
+@if(loggedUser != null){
+  @if(loggedUser.isAdmin == true){
+  <h1>Vloge strank</h1>
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Ime</th>
+      <th scope="col">Priimek</th>
+      <th scope="col">Email</th>
+      <th scope="col">Način</th>
+      <th scope="col">Termin</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var group in DbContext.Vloge.GroupBy(vloga => vloga.User.Id))
+    {
+        var userId = group.Key;
+        var user = DbContext.Users.FirstOrDefault(u => u.Id == userId);
+
+        if (user != null)
+        {
+
+            foreach (var vloga in group)
+            {
+                <tr>
+                    <td>@vloga.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.Surname</td>
+                    <td>@user.Email</td>
+                    <td>@vloga.NacinIzvajanja</td>
+                    <td>@vloga.Termin</td>
+                    <td>
+                        @if (vloga.StatusVloge == Data.Status.Oddana)
+                        {
+                            <i class="fa-solid fa-triangle-exclamation text-warning">&nbsp;Oddana</i>
+                        }
+                        else if (vloga.StatusVloge == Data.Status.Potrjena)
+                        {
+                            <i class="fa-solid fa-badge-check text-success">&nbsp;Potrjena</i>
+                        }
+                        else if (vloga.StatusVloge == Data.Status.Zavrnjena)
+                        {
+                            <i class="fa-solid fa-circle-xmark text-danger">&nbsp;Zavrnjena</i>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    }
+
+  </tbody>
+</table>
+
+  }
+
+  else{
+    NavigationManager.NavigateTo("/dashboard");
+  }
+
+}
+
+
+
+@code {
+    public User? loggedUser { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
+
+        if (loggedUser == null)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+
+        StateHasChanged();
+    }
+
+}
+
+
