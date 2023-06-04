@@ -1,45 +1,57 @@
 @page "/oddane-vloge"
 @using eUprava.Data
+@using CurrieTechnologies.Razor.SweetAlert2
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 @inject NavigationManager NavigationManager
 @inject eUpravaContext DbContext
+@inject SweetAlertService Swal
 
-
-@if(loggedUser != null){
-  <h1>Oddane vloge</h1>
-  <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Naèin</th>
-      <th scope="col">Termin</th>
-      <th scope="col">Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach(var vloga in DbContext.Vloge){
-      @if(vloga.User.Id == loggedUser.Id){
-      <tr>
-        <th scope="row">@vloga.Id</th>
-        <td>@vloga.NacinIzvajanja</td>
-        <td>@vloga.Termin</td>
-        <td>
-          @if(vloga.StatusVloge == Data.Status.Oddana){
-            <i class="fa-solid fa-triangle-exclamation text-warning"></i>
-          }else if(vloga.StatusVloge == Data.Status.Potrjena){
-            <i class="fa-solid fa-badge-check text-success"></i>
-          }else if(vloga.StatusVloge == Data.Status.Zavrnjena){
-            <i class="fa-solid fa-circle-xmark text-danger"></i>
-          }
-        </td>
-    </tr>
-      }
-    }
-  </tbody>
-</table>
+@if (loggedUser != null)
+{
+    <h1>Oddane vloge</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Naèin</th>
+                <th scope="col">Termin</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var vloga in DbContext.Vloge)
+            {
+                @if (vloga.User.Id == loggedUser.Id)
+                {
+                    <tr>
+                        <th scope="row">@vloga.Id</th>
+                        <td>@vloga.NacinIzvajanja</td>
+                        <td>@vloga.Termin</td>
+                        <td>
+                            @if (vloga.StatusVloge == Data.Status.Oddana)
+                            {
+                                <i class="fa-solid fa-triangle-exclamation text-warning"></i>
+                            }
+                            else if (vloga.StatusVloge == Data.Status.Potrjena)
+                            {
+                                <i class="fa-solid fa-badge-check text-success"></i>
+                            }
+                            else if (vloga.StatusVloge == Data.Status.Zavrnjena)
+                            {
+                                <i class="fa-solid fa-circle-xmark text-danger"></i>
+                            }
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" @onclick="() => EditVloga(vloga.Id)">Edit</button>
+                            <button class="btn btn-danger" @onclick="() => DeleteVloga(vloga.Id)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
 }
-
-
 
 @code {
     public User? loggedUser { get; set; }
@@ -56,6 +68,36 @@
         StateHasChanged();
     }
 
+    private void EditVloga(int vlogaId)
+    {
+        NavigationManager.NavigateTo($"/urejanje-vloge/{vlogaId}"); 
+    }
+
+    private async Task DeleteVloga(int vlogaId)
+    {
+        var vloga = DbContext.Vloge.FirstOrDefault(v => v.Id == vlogaId);
+
+        if (vloga != null)
+        {
+            // Show SweetAlert confirmation message
+            var result = await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Izbris Vloge",
+                    Text = "Ali ste preprièani da želite izbrisati to vlogo?",
+                    Icon = SweetAlertIcon.Warning,
+                    ShowCancelButton = true,
+                    ConfirmButtonText = "Izbriši",
+                    ConfirmButtonColor = "#dc3545",
+                    CancelButtonText = "Preklièi",
+                    ReverseButtons = true
+                });
+
+            if (result.IsConfirmed)
+            {
+                DbContext.Vloge.Remove(vloga);
+                await DbContext.SaveChangesAsync();
+                NavigationManager.NavigateTo("/oddane-vloge");
+            }
+        }
+    }
 }
-
-

@@ -1,0 +1,120 @@
+﻿@page "/urejanje-vloge/{id}"
+@using eUprava.Data
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject NavigationManager NavigationManager
+@inject eUpravaContext DbContext
+
+<!-- Auto filled inputs-->
+<div class="form-group">
+    <label for="name">Name:</label>
+    <input id="name" class="form-control" type="text" disabled value="@loggedUser?.Name" />
+
+    <label for="surname">Surname:</label>
+    <input id="surname" class="form-control" type="text" disabled value="@loggedUser?.Surname" />
+
+    <label for="emso">EMSO:</label>
+    <input id="emso" class="form-control" type="text" disabled value="@loggedUser?.EMSO" />
+
+    <label for="city">City:</label>
+    <input id="city" class="form-control" type="text" disabled value="@loggedUser?.City" />
+
+    <label for="address">Address:</label>
+    <input id="address" class="form-control" type="text" disabled value="@loggedUser?.Address" />
+
+    <label for="email">Email:</label>
+    <input id="email" class="form-control" type="text" disabled value="@loggedUser?.Email" />
+</div>
+
+<EditForm Model="@Vloga" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="nacinIzvajanja">Nacin Izvajanja:</label>
+        <InputSelect id="nacinIzvajanja" class="form-control" @bind-Value="@Vloga.NacinIzvajanja">
+            <option value="Na daljavo">Na daljavo</option>
+            <option value="Fizično">Fizično</option>
+        </InputSelect>
+        <ValidationMessage For="@(() => Vloga.NacinIzvajanja)" />
+
+        <label for="zdravniskoPotrdilo">Zdravnisko Potrdilo:</label>
+        @if (!string.IsNullOrEmpty(Vloga.ZdravniskoPotrdilo))
+        {
+            <p>Current File: <a href="@Vloga.ZdravniskoPotrdilo" target="_blank">@GetFileNameFromPath(Vloga.ZdravniskoPotrdilo)</a></p>
+        }
+        <InputFile id="zdravniskoPotrdilo" class="form-control" OnChange="e => HandleFileSelection(e, nameof(Vloga.ZdravniskoPotrdilo))" />
+        <ValidationMessage For="@(() => Vloga.ZdravniskoPotrdilo)" />
+
+        <label for="evidencniKarton">Evidencni Karton:</label>
+        @if (!string.IsNullOrEmpty(Vloga.EvidencniKarton))
+        {
+            <p>Current File: <a href="@Vloga.EvidencniKarton" target="_blank">@GetFileNameFromPath(Vloga.EvidencniKarton)</a></p>
+        }
+        <InputFile id="evidencniKarton" class="form-control" OnChange="e => HandleFileSelection(e, nameof(Vloga.EvidencniKarton))" />
+        <ValidationMessage For="@(() => Vloga.EvidencniKarton)" />
+
+        <label for="karticaPrvePomoci">Kartica Prve Pomoci:</label>
+        @if (!string.IsNullOrEmpty(Vloga.KarticaPrvePomoci))
+        {
+            <p>Current File: <a href="@Vloga.KarticaPrvePomoci" target="_blank">@GetFileNameFromPath(Vloga.KarticaPrvePomoci)</a></p>
+        }
+        <InputFile id="karticaPrvePomoci" class="form-control" OnChange="e => HandleFileSelection(e, nameof(Vloga.KarticaPrvePomoci))" />
+        <ValidationMessage For="@(() => Vloga.KarticaPrvePomoci)" />
+
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</EditForm>
+
+@code {
+    private User? loggedUser;
+    private Vloga Vloga = new Vloga();
+
+    [Parameter]
+    public string id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
+
+        if (loggedUser == null)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            // Find the user in the database to ensure a fresh instance
+            loggedUser = await DbContext.Users.FindAsync(loggedUser.Id);
+        }
+
+        // Get the vlogaId from the route parameters
+        int vlogaId = Convert.ToInt32(id);
+        Vloga = DbContext.Vloge.FirstOrDefault(v => v.Id == vlogaId);
+
+        if (Vloga == null || Vloga.User.Id != loggedUser.Id)
+        {
+            NavigationManager.NavigateTo("/oddane-vloge");
+        }
+    }
+
+    private string GetFileNameFromPath(string filePath)
+    {
+        return Path.GetFileName(filePath);
+    }
+
+    private async Task HandleFileSelection(InputFileChangeEventArgs e, string propertyName)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            var rootPath = Path.Combine(Directory.GetCurrentDirectory(), file.Name);
+
+            typeof(Vloga).GetProperty(propertyName)?.SetValue(Vloga, rootPath);
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        DbContext.Vloge.Update(Vloga);
+        await DbContext.SaveChangesAsync();
+
+        NavigationManager.NavigateTo("/oddane-vloge");
+    }
+}
