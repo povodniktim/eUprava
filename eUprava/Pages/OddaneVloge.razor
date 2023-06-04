@@ -29,11 +29,11 @@
         <td>@(vloga.Termin != DateTime.MinValue ? vloga.Termin.ToString() : "nedoločen")</td>
         <td>
           @if(vloga.StatusVloge == Data.Status.Oddana){
-            <i class="fa-solid fa-spinner text-warning">&nbsp;Oddana</i>
+            <i class="fa-solid fa-spinner text-warning"></i>
           }else if(vloga.StatusVloge == Data.Status.Potrjena){
-            <i class="fa-solid fa-circle-check text-success">&nbsp;Potrjena</i>
+            <i class="fa-solid fa-circle-check text-success"></i>
           }else if(vloga.StatusVloge == Data.Status.Zavrnjena){
-            <i class="fa-solid fa-circle-xmark text-danger">&nbsp;Zavrjnjena</i>
+            <i class="fa-solid fa-circle-xmark text-danger"></i>
           }
         </td>
         <td>@if(vloga.Komentar != null){

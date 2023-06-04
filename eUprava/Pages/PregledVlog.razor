@@ -11,29 +11,29 @@
   @if(loggedUser.isAdmin == true)
   {
 
-    <h1>Vloge strank</h1>
-    <div class="row">
+    <h1 style="text-align: center; margin-bottom: 2em;">Vloge strank</h1>
+    <div class="row" style="margin-bottom: 2em;">
         <div class="col-md-4">
             <div class="card text-center border-primary">
                 <div class="card-body">
-                    <h5 class="card-title"><i class="fa-solid fa-file-upload text-primary"></i> Število oddanih vlog</h5>
-                    <p class="card-text">@DbContext.Vloge.Count(v => v.StatusVloge == Status.Oddana)</p>
+                    <h5 class="card-title"><i class="fa-solid fa-file-upload text-primary"></i> Oddane vloge</h5>
+                    <h3 class="card-text">@DbContext.Vloge.Count(v => v.StatusVloge == Status.Oddana)</h3>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card text-center border-success">
                 <div class="card-body">
-                    <h5 class="card-title"><i class="fa-solid fa-check text-success"></i> Število potrjenih vlog</h5>
-                    <p class="card-text">@DbContext.Vloge.Count(v => v.StatusVloge == Status.Potrjena)</p>
+                    <h5 class="card-title"><i class="fa-solid fa-check text-success"></i> Potrjene vloge</h5>
+                    <h3 class="card-text">@DbContext.Vloge.Count(v => v.StatusVloge == Status.Potrjena)</h3>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card text-center border-danger">
                 <div class="card-body">
-                    <h5 class="card-title"><i class="fa-solid fa-times text-danger"></i> Število zavrnjenih vlog</h5>
-                    <p class="card-text">@DbContext.Vloge.Count(v => v.StatusVloge == Status.Zavrnjena)</p>
+                    <h5 class="card-title"><i class="fa-solid fa-times text-danger"></i> Zavrnjene vloge</h5>
+                    <h3 class="card-text">@DbContext.Vloge.Count(v => v.StatusVloge == Status.Zavrnjena)</h3>
                 </div>
             </div>
         </div>
@@ -74,15 +74,15 @@
                     <td>
                         @if (vloga.StatusVloge == Data.Status.Oddana)
                         {
-                            <i class="fa-solid fa-spinner text-warning">&nbsp;Oddana</i>
+                            <i class="fa-solid fa-spinner text-warning"></i>
                         }
                         else if (vloga.StatusVloge == Data.Status.Potrjena)
                         {
-                            <i class="fa-solid fa-badge-check text-success">&nbsp;Potrjena</i>
+                            <i class="fa-solid fa-badge-check text-success"></i>
                         }
                         else if (vloga.StatusVloge == Data.Status.Zavrnjena)
                         {
-                            <i class="fa-solid fa-circle-xmark text-danger">&nbsp;Zavrnjena</i>
+                            <i class="fa-solid fa-circle-xmark text-danger"></i>
                         }
                     </td>
                     <td>@if(vloga.Komentar != null){
