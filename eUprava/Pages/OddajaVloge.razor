@@ -6,19 +6,19 @@
 
 <!-- Auto filled inputs-->
 <div class="form-group">
-    <label for="name">Name:</label>
+    <label for="name">Ime:</label>
     <input id="name" class="form-control" type="text" disabled value="@loggedUser?.Name" />
 
-    <label for="surname">Surname:</label>
+    <label for="surname">Priimek:</label>
     <input id="surname" class="form-control" type="text" disabled value="@loggedUser?.Surname" />
 
-    <label for="emso">EMSO:</label>
+    <label for="emso">EMŠO:</label>
     <input id="emso" class="form-control" type="text" disabled value="@loggedUser?.EMSO" />
 
-    <label for="city">City:</label>
+    <label for="city">Mesto:</label>
     <input id="city" class="form-control" type="text" disabled value="@loggedUser?.City" />
 
-    <label for="address">Address:</label>
+    <label for="address">Naslov:</label>
     <input id="address" class="form-control" type="text" disabled value="@loggedUser?.Address" />
 
     <label for="email">Email:</label>
@@ -35,15 +35,15 @@
         </InputSelect>
         <ValidationMessage For="@(() => Vloga.NacinIzvajanja)" />
 
-        <label for="zdravniskoPotrdilo">Zdravnisko Potrdilo:</label>
+        <label for="zdravniskoPotrdilo">Zdravniško Potrdilo:</label>
         <InputFile id="zdravniskoPotrdilo" class="form-control" OnChange="e => HandleFileSelection(e, nameof(Vloga.ZdravniskoPotrdilo))" />
         <ValidationMessage For="@(() => Vloga.ZdravniskoPotrdilo)" />
 
-        <label for="evidencniKarton">Evidencni Karton:</label>
+        <label for="evidencniKarton">Evidenčni Karton:</label>
         <InputFile id="evidencniKarton" class="form-control" OnChange="e => HandleFileSelection(e, nameof(Vloga.EvidencniKarton))" />
         <ValidationMessage For="@(() => Vloga.EvidencniKarton)" />
 
-        <label for="karticaPrvePomoci">Kartica Prve Pomoci:</label>
+        <label for="karticaPrvePomoci">Kartica Prve Pomoči:</label>
         <InputFile id="karticaPrvePomoci" class="form-control" OnChange="e => HandleFileSelection(e, nameof(Vloga.KarticaPrvePomoci))" />
         <ValidationMessage For="@(() => Vloga.KarticaPrvePomoci)" />
     </div>
