@@ -16,7 +16,8 @@
       <th scope="col">Način</th>
       <th scope="col">Termin</th>
       <th scope="col">Status</th>
-      <th scope="col">Action</th>
+      <th scope="col">Komentar</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -28,16 +29,19 @@
         <td>@(vloga.Termin != DateTime.MinValue ? vloga.Termin.ToString() : "nedoločen")</td>
         <td>
           @if(vloga.StatusVloge == Data.Status.Oddana){
-            <i class="fa-solid fa-triangle-exclamation text-warning">&nbsp;Oddana</i>
+            <i class="fa-solid fa-spinner text-warning">&nbsp;Oddana</i>
           }else if(vloga.StatusVloge == Data.Status.Potrjena){
             <i class="fa-solid fa-badge-check text-success">&nbsp;Potrjena</i>
           }else if(vloga.StatusVloge == Data.Status.Zavrnjena){
             <i class="fa-solid fa-circle-xmark text-danger">&nbsp;Zavrjnjena</i>
           }
         </td>
+        <td>@if(vloga.Komentar != null){
+          @vloga.Komentar}
+        </td>
         <td>
-            <button class="btn btn-primary" @onclick="() => EditVloga(vloga.Id)">Edit</button>
-            <button class="btn btn-danger" @onclick="() => DeleteVloga(vloga.Id)">Delete</button>
+          <button class="btn" @onclick="() => EditVloga(vloga.Id)"><i class="fa-solid fa-eye text-success"></i></button>
+          <button class="btn" @onclick="() => DeleteVloga(vloga.Id)"><i class="fa-solid fa-trash text-danger"></i></button>
         </td>
     </tr>
       }

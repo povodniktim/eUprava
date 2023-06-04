@@ -1,8 +1,10 @@
 @page "/pregled-vlog"
 @using eUprava.Data
+@using CurrieTechnologies.Razor.SweetAlert2
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 @inject NavigationManager NavigationManager
 @inject eUpravaContext DbContext
+@inject SweetAlertService Swal
 
 
 @if(loggedUser != null){
@@ -18,6 +20,8 @@
       <th scope="col">Način</th>
       <th scope="col">Termin</th>
       <th scope="col">Status</th>
+      <th scope="col">Komentar</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -41,7 +45,7 @@
                     <td>
                         @if (vloga.StatusVloge == Data.Status.Oddana)
                         {
-                            <i class="fa-solid fa-triangle-exclamation text-warning">&nbsp;Oddana</i>
+                            <i class="fa-solid fa-spinner text-warning">&nbsp;Oddana</i>
                         }
                         else if (vloga.StatusVloge == Data.Status.Potrjena)
                         {
@@ -52,6 +56,13 @@
                             <i class="fa-solid fa-circle-xmark text-danger">&nbsp;Zavrnjena</i>
                         }
                     </td>
+                    <td>@if(vloga.Komentar != null){
+                      @vloga.Komentar}
+                    </td>
+                    <td>
+                      <button class="btn" @onclick="() => EditVloga(vloga.Id)"><i class="fa-solid fa-eye text-success"></i></button>
+                      <button class="btn" @onclick="() => DeleteVloga(vloga.Id)"><i class="fa-solid fa-trash text-danger"></i></button>
+                   </td>
                 </tr>
             }
         }
@@ -83,6 +94,39 @@
         }
 
         StateHasChanged();
+    }
+
+    private void EditVloga(int vlogaId)
+    {
+        NavigationManager.NavigateTo($"/urejanje-vloge/{vlogaId}"); 
+    }
+
+    private async Task DeleteVloga(int vlogaId)
+    {
+        var vloga = DbContext.Vloge.FirstOrDefault(v => v.Id == vlogaId);
+
+        if (vloga != null)
+        {
+            // Show SweetAlert confirmation message
+            var result = await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Izbris Vloge",
+                    Text = "Ali ste prepričani da želite izbrisati to vlogo?",
+                    Icon = SweetAlertIcon.Warning,
+                    ShowCancelButton = true,
+                    ConfirmButtonText = "Izbriši",
+                    ConfirmButtonColor = "#dc3545",
+                    CancelButtonText = "Prekliči",
+                    ReverseButtons = true
+                });
+
+            if (result.IsConfirmed)
+            {
+                DbContext.Vloge.Remove(vloga);
+                await DbContext.SaveChangesAsync();
+                NavigationManager.NavigateTo("/oddane-vloge");
+            }
+        }
     }
 
 }
