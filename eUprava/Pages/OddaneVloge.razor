@@ -25,7 +25,7 @@
       <tr>
         <th scope="row">@vloga.Id</th>
         <td>@vloga.NacinIzvajanja</td>
-        <td>@vloga.Termin</td>
+        <td>@(vloga.Termin != DateTime.MinValue ? vloga.Termin.ToString() : "nedoločen")</td>
         <td>
           @if(vloga.StatusVloge == Data.Status.Oddana){
             <i class="fa-solid fa-triangle-exclamation text-warning">&nbsp;Oddana</i>
