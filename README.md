@@ -61,7 +61,8 @@ To run the eUprava application locally, follow these steps:
 
 7. Start exploring the features of eUprava and enjoy managing driver's licence requests efficiently.
 
-# Contributing
+## Contributing
+
 Contributions to eUprava are welcome! If you would like to contribute to the project, please follow these steps:
 
 1. Fork the repository.
