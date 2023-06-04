@@ -8,23 +8,52 @@
 
 
 @if(loggedUser != null){
-  @if(loggedUser.isAdmin == true){
-  <h1>Vloge strank</h1>
-  <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Ime</th>
-      <th scope="col">Priimek</th>
-      <th scope="col">Email</th>
-      <th scope="col">Način</th>
-      <th scope="col">Termin</th>
-      <th scope="col">Status</th>
-      <th scope="col">Komentar</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
+  @if(loggedUser.isAdmin == true)
+  {
+
+    <h1>Vloge strank</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-center border-primary">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fa-solid fa-file-upload text-primary"></i> Število oddanih vlog</h5>
+                    <p class="card-text">@DbContext.Vloge.Count(v => v.StatusVloge == Status.Oddana)</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center border-success">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fa-solid fa-check text-success"></i> Število potrjenih vlog</h5>
+                    <p class="card-text">@DbContext.Vloge.Count(v => v.StatusVloge == Status.Potrjena)</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center border-danger">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fa-solid fa-times text-danger"></i> Število zavrnjenih vlog</h5>
+                    <p class="card-text">@DbContext.Vloge.Count(v => v.StatusVloge == Status.Zavrnjena)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Ime</th>
+            <th scope="col">Priimek</th>
+            <th scope="col">Email</th>
+            <th scope="col">Način</th>
+            <th scope="col">Termin</th>
+            <th scope="col">Status</th>
+            <th scope="col">Komentar</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
     @foreach (var group in DbContext.Vloge.GroupBy(vloga => vloga.User.Id))
     {
         var userId = group.Key;
