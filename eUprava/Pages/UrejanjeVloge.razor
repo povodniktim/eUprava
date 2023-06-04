@@ -4,6 +4,7 @@
 @inject NavigationManager NavigationManager
 @inject eUpravaContext DbContext
 
+@if(loggedUser != null){
 <!-- Auto filled inputs-->
 <div class="form-group">
     <label for="name">Ime:</label>
@@ -25,6 +26,7 @@
     <input id="email" class="form-control" type="text" disabled value="@loggedUser?.Email" />
 </div>
 
+@if(loggedUser.isAdmin == false){
 <EditForm Model="@Vloga" OnValidSubmit="HandleSubmit">
     <DataAnnotationsValidator />
     <div class="form-group">
@@ -62,9 +64,59 @@
     </div>
     <button class="btn btn-primary" type="submit">Submit</button>
 </EditForm>
+}else
+{
+    <EditForm Model="@Vloga" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="nacinIzvajanja">Nacin Izvajanja:</label>
+        <InputSelect id="nacinIzvajanja" class="form-control" @bind-Value="@Vloga.NacinIzvajanja">
+            <option value="Na daljavo">Na daljavo</option>
+            <option value="Fizično">Fizično</option>
+        </InputSelect>
+
+        <label for="status">Status:</label>
+        <InputSelect id="status" class="form-control" @bind-Value="@Vloga.StatusVloge">
+            <option value="0">Oddana</option>
+            <option value="1">Potrjena</option>
+            <option value="2">Zavrnjena</option>
+        </InputSelect>
+    
+
+        <ValidationMessage For="@(() => Vloga.NacinIzvajanja)" />
+
+        <label for="zdravniskoPotrdilo">Zdravniško Potrdilo:</label>
+        @if (!string.IsNullOrEmpty(Vloga.ZdravniskoPotrdilo))
+        {
+            <p>Current File: <a href="@Vloga.ZdravniskoPotrdilo" target="_blank">@GetFileNameFromPath(Vloga.ZdravniskoPotrdilo)</a></p>
+        }
+
+        <label for="evidencniKarton">Evidenčni Karton:</label>
+        @if (!string.IsNullOrEmpty(Vloga.EvidencniKarton))
+        {
+            <p>Current File: <a href="@Vloga.EvidencniKarton" target="_blank">@GetFileNameFromPath(Vloga.EvidencniKarton)</a></p>
+        }
+
+        <label for="karticaPrvePomoci">Kartica Prve Pomoči:</label>
+        @if (!string.IsNullOrEmpty(Vloga.KarticaPrvePomoci))
+        {
+            <p>Current File: <a href="@Vloga.KarticaPrvePomoci" target="_blank">@GetFileNameFromPath(Vloga.KarticaPrvePomoci)</a></p>
+        }
+
+        
+    <label for="komentar">Komentar:</label>
+    <input id="komentar" class="form-control" type="text" value="tu mora bit bind al neki" />
+
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</EditForm>
+}
+}
+
+
 
 @code {
-    private User? loggedUser;
+    private User? loggedUser { get; set; }
     private Vloga Vloga = new Vloga();
 
     [Parameter]
@@ -88,10 +140,13 @@
         int vlogaId = Convert.ToInt32(id);
         Vloga = DbContext.Vloge.FirstOrDefault(v => v.Id == vlogaId);
 
-        if (Vloga == null || Vloga.User.Id != loggedUser.Id)
-        {
-            NavigationManager.NavigateTo("/oddane-vloge");
-        }
+            if(loggedUser.isAdmin == false)
+            {
+                if (Vloga == null || Vloga.User.Id != loggedUser.Id)
+                {
+                    NavigationManager.NavigateTo("/oddane-vloge");
+                }
+            }
     }
 
     private string GetFileNameFromPath(string filePath)
