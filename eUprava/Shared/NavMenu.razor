@@ -53,7 +53,10 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
+        if(firstRender)
+        {
+            loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
+        }
 
         if (loggedUser == null)
         {
