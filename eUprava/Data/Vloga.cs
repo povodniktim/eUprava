@@ -24,7 +24,7 @@ namespace eUprava.Data
 
     public Status StatusVloge { get; set; }
 
-    public string Komentar { get; set; }
+    public string? Komentar { get; set; }
   }
 
   public enum Status
