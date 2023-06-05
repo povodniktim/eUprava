@@ -20,8 +20,8 @@
                     <div class="circle-icon @(IsHovered1 ? "hovered" : "") bg-primary">
                         <i class="fa-solid @(IsHovered1 ? "fa fa-hand-pointer-o" : "fa-file-upload") text-white icon"></i>
                     </div>
+                    <h3 class="card-text" style="font-size: 48px !important">@DbContext.Vloge.Count(v => v.StatusVloge == Status.Oddana)</h3>
                     <h5 class="card-title">Oddane vloge</h5>
-                    <h3 class="card-text">@DbContext.Vloge.Count(v => v.StatusVloge == Status.Oddana)</h3>
                 </div>
             </div>
         </div>
@@ -33,8 +33,8 @@
                     <div class="circle-icon @(IsHovered2 ? "hovered" : "") bg-success">
                         <i class="fa-solid @(IsHovered2 ? "fa fa-hand-pointer-o" : "fa-check") text-white icon"></i>
                     </div>
+                    <h3 class="card-text" style="font-size: 48px !important">@DbContext.Vloge.Count(v => v.StatusVloge == Status.Potrjena)</h3>
                     <h5 class="card-title">Potrjene vloge</h5>
-                    <h3 class="card-text">@DbContext.Vloge.Count(v => v.StatusVloge == Status.Potrjena)</h3>
                 </div>
             </div>
         </div>
@@ -44,10 +44,10 @@
             @onmouseout="() => IsHovered3 = false">
                 <div class="card-body">
                     <div class="circle-icon @(IsHovered3 ? "hovered" : "") bg-danger">
-                        <i class="fa-solid @(IsHovered3 ? "fa fa-hand-pointer-o" : "fa-file-upload") text-white icon"></i>
+                        <i class="fa-solid @(IsHovered3 ? "fa fa-hand-pointer-o" : "fa-circle-xmark") text-white icon"></i>
                     </div>
+                    <h3 class="card-text" style="font-size: 48px !important">@DbContext.Vloge.Count(v => v.StatusVloge == Status.Zavrnjena)</h3>
                     <h5 class="card-title">Zavrnjene vloge</h5>
-                    <h3 class="card-text">@DbContext.Vloge.Count(v => v.StatusVloge == Status.Zavrnjena)</h3>
                 </div>
             </div>
         </div>
@@ -84,11 +84,11 @@
                     <td>@user.Surname</td>
                     <td>@user.Email</td>
                     <td>@vloga.NacinIzvajanja</td>
-                    <td>@vloga.Termin</td>
+                    <td>@(vloga.Termin != DateTime.MinValue ? vloga.Termin.ToString() : "nedoločen")</td>
                     <td>
                         @if (vloga.StatusVloge == Data.Status.Oddana)
                         {
-                            <i class="fa-solid fa-spinner text-warning"></i>
+                            <i class="fa-solid fa-hourglass-half text-warning"></i>
                         }
                         else if (vloga.StatusVloge == Data.Status.Potrjena)
                         {

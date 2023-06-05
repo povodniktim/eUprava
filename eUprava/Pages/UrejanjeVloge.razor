@@ -105,6 +105,9 @@
                 <p>Current File: <a href="@Vloga.KarticaPrvePomoci" target="_blank">@GetFileNameFromPath(Vloga.KarticaPrvePomoci)</a></p>
             }
 
+            <label for="termin">Termin izvajanja:</label>
+            <input id="termin" class="form-control" type="datetime-local" @bind-value="@Vloga.Termin" />
+
         
         <label for="komentar">Komentar:</label>
         <input id="komentar" class="form-control" type="text" @bind-value="@Vloga.Komentar" />
