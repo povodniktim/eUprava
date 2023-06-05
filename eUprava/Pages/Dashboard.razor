@@ -13,20 +13,20 @@
             </div>
         </div>
 
-    <div class="row" style="margin-bottom: 2em;">
+    <div class="row justify-content-center" style="margin-bottom: 2em;">
         <div class="col-md-4">
             <div class="card text-center border-primary">
                 <div class="card-body">
+                    <h3 class="card-text" style="font-size: 48px !important">@DbContext.Users.Count()</h3>
                     <h5 class="card-title"><i class="fa-solid fa-users text-primary"></i> Stranke</h5>
-                    <h3 class="card-text">@DbContext.Users.Count()</h3>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card text-center border-success">
                 <div class="card-body">
+                    <h3 class="card-text" style="font-size: 48px !important">@DbContext.Vloge.Count()</h3>
                     <h5 class="card-title"><i class="fa-solid fa-list-ol text-success"></i> Vloge</h5>
-                    <h3 class="card-text">@DbContext.Vloge.Count()</h3>
                 </div>
             </div>
         </div>
