@@ -99,13 +99,13 @@ body {
     margin: auto;
 }
 
-    .logo img {
-        width: 100%;
-        height: 90px;
-        object-fit: cover;
-        border-radius: 50%;
-        box-shadow: 0px 0px 3px #5f5f5f, 0px 0px 0px 5px #ecf0f3, 8px 8px 15px #a7aaa7, -8px -8px 15px #fff;
-    }
+.logo img {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0px 0px 3px #5f5f5f, 0px 0px 0px 5px #ecf0f3, 8px 8px 15px #a7aaa7, -8px -8px 15px #fff;
+}
 
 .wrapper .name {
     font-weight: 600;
@@ -134,9 +134,9 @@ body {
     box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
 }
 
-    .wrapper .form-field .fas {
-        color: #555;
-    }
+.wrapper .form-field .fas {
+    color: #555;
+}
 
 .wrapper .btn {
     box-shadow: none;
@@ -149,9 +149,9 @@ body {
     letter-spacing: 1.3px;
 }
 
-    .wrapper .btn:hover {
-        background-color: #039BE5;
-    }
+.wrapper .btn:hover {
+    background-color: #039BE5;
+}
 
 .wrapper a {
     text-decoration: none;
@@ -169,12 +169,12 @@ body {
     transition: transform 0.5s ease-in-out;
 }
 
-    .circle-icon .icon {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
+.circle-icon .icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
 .card:hover .circle-icon {
     transform: scaleX(-1) rotate(360deg);
@@ -184,10 +184,10 @@ body {
     transition: box-shadow 0.3s ease-in-out;
 }
 
-    .card:hover {
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-        border: 3px solid white;
-    }
+.card:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    border: 3px solid white;
+}
 
 .circle-icon {
     display: flex;

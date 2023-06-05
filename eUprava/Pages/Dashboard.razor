@@ -19,7 +19,7 @@
                         @onmouseover="() => IsHovered1 = true"
                         @onmouseout="() => IsHovered1 = false">
                         <div class="card-body">
-                            <div class="circle-icon @(IsHovered1 ? "hovered" : "") bg-success">
+                            <div class="circle-icon @(IsHovered1 ? "hovered" : "") bg-primary">
                                 <i class="fa-solid @(IsHovered1 ? "fa fa-hand-pointer-o" : "fa-users") text-white icon"></i>
                             </div>
                             <h3 class="card-text" style="font-size: 48px !important">@DbContext.Users.Count()</h3>
@@ -32,7 +32,7 @@
                         @onmouseover="() => IsHovered2 = true"
                         @onmouseout="() => IsHovered2 = false">
                         <div class="card-body">
-                            <div class="circle-icon @(IsHovered2 ? "hovered" : "") bg-danger">
+                            <div class="circle-icon @(IsHovered2 ? "hovered" : "") bg-primary">
                                 <i class="fa-solid @(IsHovered2 ? "fa fa-hand-pointer-o" : "fa-list-ol") text-white icon"></i>
                             </div>
                             <h3 class="card-text" style="font-size: 48px !important">@DbContext.Vloge.Count()</h3>
