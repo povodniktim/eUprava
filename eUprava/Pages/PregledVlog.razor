@@ -66,54 +66,52 @@
             <th scope="col">Komentar</th>
             <th scope="col"></th>
         </tr>
-    </thead>
-    <tbody>
-    @foreach (var group in DbContext.Vloge.GroupBy(vloga => vloga.User.Id))
-    {
-        var userId = group.Key;
-        var user = DbContext.Users.FirstOrDefault(u => u.Id == userId);
-
-        if (user != null)
+        </thead>
+        <tbody>
+        @foreach (var group in DbContext.Vloge.GroupBy(vloga => vloga.User.Id))
         {
+            var userId = group.Key;
+            var user = DbContext.Users.FirstOrDefault(u => u.Id == userId);
 
-            foreach (var vloga in group)
+            if (user != null)
             {
-                <tr>
-                    <td>@vloga.Id</td>
-                    <td>@user.Name</td>
-                    <td>@user.Surname</td>
-                    <td>@user.Email</td>
-                    <td>@vloga.NacinIzvajanja</td>
-                    <td>@(vloga.Termin != DateTime.MinValue ? vloga.Termin.ToString() : "nedoločen")</td>
-                    <td>
-                        @if (vloga.StatusVloge == Data.Status.Oddana)
-                        {
-                            <i class="fa-solid fa-hourglass-half text-warning"></i>
-                        }
-                        else if (vloga.StatusVloge == Data.Status.Potrjena)
-                        {
-                            <i class="fa-solid fa-circle-check text-success"></i>
-                        }
-                        else if (vloga.StatusVloge == Data.Status.Zavrnjena)
-                        {
-                            <i class="fa-solid fa-circle-xmark text-danger"></i>
-                        }
-                    </td>
-                    <td>@if(vloga.Komentar != null){
-                      @vloga.Komentar}
-                    </td>
-                    <td>
-                      <button class="btn" @onclick="() => EditVloga(vloga.Id)"><i class="fa-solid fa-eye text-success"></i></button>
-                      <button class="btn" @onclick="() => DeleteVloga(vloga.Id)"><i class="fa-solid fa-trash text-danger"></i></button>
-                   </td>
-                </tr>
+
+                foreach (var vloga in group)
+                {
+                    <tr>
+                        <td>@vloga.Id</td>
+                        <td>@user.Name</td>
+                        <td>@user.Surname</td>
+                        <td>@user.Email</td>
+                        <td>@vloga.NacinIzvajanja</td>
+                        <td>@(vloga.Termin != DateTime.MinValue ? vloga.Termin.ToString() : "nedoločen")</td>
+                        <td>
+                            @if (vloga.StatusVloge == Data.Status.Oddana)
+                            {
+                                <i class="fa-solid fa-hourglass-half text-warning"></i>
+                            }
+                            else if (vloga.StatusVloge == Data.Status.Potrjena)
+                            {
+                                <i class="fa-solid fa-circle-check text-success" tyle="margin-left: 5px;"></i>
+                            }
+                            else if (vloga.StatusVloge == Data.Status.Zavrnjena)
+                            {
+                                <i class="fa-solid fa-circle-xmark text-danger"></i>
+                            }
+                        </td>
+                        <td>@if(vloga.Komentar != null){
+                          @vloga.Komentar}
+                        </td>
+                        <td>
+                          <button class="btn" @onclick="() => EditVloga(vloga.Id)"><i class="fa-solid fa-eye text-success"></i></button>
+                          <button class="btn" @onclick="() => DeleteVloga(vloga.Id)"><i class="fa-solid fa-trash text-danger"></i></button>
+                       </td>
+                    </tr>
+                }
             }
         }
-    }
-
-  </tbody>
-</table>
-
+        </tbody>
+    </table>
   }
 
   else{
