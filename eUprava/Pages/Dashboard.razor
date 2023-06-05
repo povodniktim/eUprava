@@ -6,31 +6,42 @@
 
 @if (loggedUser != null)
 {
-    <div class="container">
-        <div class="row justify-content-center" stlye="margin-bottom: 2em;">
-            <div class="col-12 text-center">
-                <h2>Pozdravljen/a, @loggedUser.Name @loggedUser.Surname</h2>
+        <div class="container">
+            <div class="row justify-content-center" style="margin-bottom: 2em;">
+                <div class="col-12 text-center">
+                    <h2>Pozdravljen/a, @loggedUser.Name @loggedUser.Surname</h2>
+                </div>
             </div>
-        </div>
 
-    <div class="row justify-content-center" style="margin-bottom: 2em;">
-        <div class="col-md-4">
-            <div class="card text-center border-primary">
-                <div class="card-body">
-                    <h3 class="card-text" style="font-size: 48px !important">@DbContext.Users.Count()</h3>
-                    <h5 class="card-title"><i class="fa-solid fa-users text-primary"></i> Stranke</h5>
+            <div class="row justify-content-center" style="margin-bottom: 2em;">
+                <div class="col-md-4" style="margin-bottom: 2em;">
+                    <div class="card text-center border-primary"
+                        @onmouseover="() => IsHovered1 = true"
+                        @onmouseout="() => IsHovered1 = false">
+                        <div class="card-body">
+                            <div class="circle-icon @(IsHovered1 ? "hovered" : "") bg-success">
+                                <i class="fa-solid @(IsHovered1 ? "fa fa-hand-pointer-o" : "fa-users") text-white icon"></i>
+                            </div>
+                            <h3 class="card-text" style="font-size: 48px !important">@DbContext.Users.Count()</h3>
+                            <h5 class="card-title">Potrjene vloge</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" style="margin-bottom: 1em;">
+                    <div class="card text-center border-primary"
+                        @onmouseover="() => IsHovered2 = true"
+                        @onmouseout="() => IsHovered2 = false">
+                        <div class="card-body">
+                            <div class="circle-icon @(IsHovered2 ? "hovered" : "") bg-danger">
+                                <i class="fa-solid @(IsHovered2 ? "fa fa-hand-pointer-o" : "fa-list-ol") text-white icon"></i>
+                            </div>
+                            <h3 class="card-text" style="font-size: 48px !important">@DbContext.Vloge.Count()</h3>
+                            <h5 class="card-title">Zavrnjene vloge</h5>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card text-center border-success">
-                <div class="card-body">
-                    <h3 class="card-text" style="font-size: 48px !important">@DbContext.Vloge.Count()</h3>
-                    <h5 class="card-title"><i class="fa-solid fa-list-ol text-success"></i> Vloge</h5>
-                </div>
-            </div>
-        </div>
-    </div>
 
         <div class="row justify-content-center mt-4">
             @if (!loggedUser.isAdmin)
@@ -51,7 +62,6 @@
                 </div>
             }
         </div>
-    </div>
 }
 
 @code {
@@ -70,4 +80,7 @@
         StateHasChanged();
     }
 
+    // For KPI's animation
+    private bool IsHovered1 { get; set; } = false;
+    private bool IsHovered2 { get; set; } = false;
 }

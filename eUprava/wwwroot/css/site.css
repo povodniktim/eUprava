@@ -50,12 +50,12 @@ a, .btn-link {
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
-    }
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
 
 .blazor-error-boundary {
     background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNDki
@@ -159,6 +159,66 @@ body {
     color: #03A9F4;
 }
 
-    .wrapper a:hover {
-        color: #039BE5;
+.wrapper a:hover {
+    color: #039BE5;
+}
+
+/* KPI's */
+.circle-icon {
+    position: relative;
+    transition: transform 0.5s ease-in-out;
+}
+
+    .circle-icon .icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
+
+.card:hover .circle-icon {
+    transform: scaleX(-1) rotate(360deg);
+}
+
+.card {
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+    .card:hover {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border: 3px solid white;
+    }
+
+.circle-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: transparent;
+    position: relative;
+    margin: 0 auto;
+    top: -50px;
+    border: 4px solid #ECF0F3;
+}
+
+.card {
+    border: 3px solid #000000;
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 24px;
+    font-weight: bold;
+}
