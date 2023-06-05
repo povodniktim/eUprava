@@ -53,17 +53,9 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
-        {
-            loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
+        loggedUser = await sessionStorage.GetItemAsync<User>("LoggedUser");
 
-            if (loggedUser == null)
-            {
-                NavigationManager.NavigateTo("/");
-            }
-
-            StateHasChanged();
-        }
+        StateHasChanged();
     }
 
     public void ClearSession()
